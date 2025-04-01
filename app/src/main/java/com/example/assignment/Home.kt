@@ -24,7 +24,7 @@ fun Home(entriesState: EntriesState, quoteState: QuoteState) {
             LazyColumn {
                 item {
                     Text(quoteState.quote?.text ?: "none")
-                    Text(quoteState.quote?.author?.get("name").toString() ?: "Unknown")
+                    Text(quoteState.quote?.author?.name ?: "Unknown")
                 }
                 items(entries.size) {
                     val date = Date(entries[it].date)

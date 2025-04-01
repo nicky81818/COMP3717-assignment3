@@ -1,0 +1,1 @@
+Source for API: https://www.quoterism.com/developer

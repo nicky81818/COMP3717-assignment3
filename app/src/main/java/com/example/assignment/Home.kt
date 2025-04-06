@@ -26,7 +26,7 @@ import java.util.Date
 @Composable
 fun Home(quoteState: QuoteState) {
     val entriesState: EntriesState = viewModel(LocalActivity.current as ComponentActivity)
-    Column (modifier = Modifier.safeDrawingPadding()){
+    Column{
         val entries = entriesState.entries
         var searchVisible by remember{ mutableStateOf(false )}
         Column {
@@ -45,23 +45,19 @@ fun Home(quoteState: QuoteState) {
                     IconButton(onClick = { searchVisible = true }) {
                         Icon(Icons.Default.Search, contentDescription = "Search")
                     }
-                    Text("Search for an Entry")
+                    Text("Search for an Entry", fontWeight = FontWeight.Light)
                 }
             }
 
-            LazyColumn {
+            LazyColumn(modifier = Modifier.fillMaxHeight()) {
                 item {
                     Column(horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.background(Color(0xFFFCF5E5))){
-                        Text(quoteState.quote?.text ?: "none",
-                            fontFamily = FontFamily.Cursive,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 50.sp,
-                            textAlign = TextAlign.Center)
-                        val author = quoteState.quote?.author?.name ?: "Unknown"
-                        Text("-$author",
-                            fontSize = 35.sp,
-                            textAlign = TextAlign.Center)
+                        QuoteBannerDisplay(
+                            quoteState.quote?.text ?: "none",
+                            quoteState.quote?.author?.name ?: "Unknown",
+                            true
+                        )
                     }
                 }
                 items(entries.size) {
@@ -75,6 +71,10 @@ fun Home(quoteState: QuoteState) {
                             .padding(10.dp)
                     ){
                         DateTextField(date)
+                        QuoteBannerDisplay(
+                            entries[it].quoteOfTheDay?: "none",
+                            entries[it].author?: "Unknown",
+                            false)
                         Text("${entries[it].summary}",
                             fontSize = 25.sp,
                             modifier = Modifier.padding(20.dp))
@@ -99,4 +99,24 @@ fun DateTextField(date: Long){
         fontWeight = FontWeight.Bold,
         fontSize = 35.sp,
         modifier = Modifier.padding(10.dp))
+}
+
+@Composable
+fun QuoteBannerDisplay(quote: String, author: String, isMain: Boolean){
+    val quoteSize = if (isMain) 40.sp else 30.sp
+    val authorSize = if (isMain) 25.sp else 15.sp
+    if (!isMain) Text("Quote of the Day", fontSize = 20.sp, modifier = Modifier.padding(10.dp))
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            quote,
+            fontFamily = FontFamily.Cursive,
+            fontWeight = FontWeight.Bold,
+            fontSize = quoteSize,
+            textAlign = TextAlign.Center
+        )
+        Text("-$author",
+            fontSize = authorSize,
+            textAlign = TextAlign.Center)
+    }
+
 }

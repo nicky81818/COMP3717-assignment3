@@ -8,7 +8,11 @@ import com.example.assignment.data.QuoteRepository
 
 class QuoteState(private val repository: QuoteRepository) {
     var quote by mutableStateOf<Quote?>(null)
+    var quoteOfTheDay by mutableStateOf<Quote?>(null)
 
-    suspend fun getQuote() {quote = repository.getQuote() }
+    suspend fun getQuotes() {
+        quote = repository.getQuote()
+        quoteOfTheDay = repository.getQuoteOfTheDay()
+    }
 
 }

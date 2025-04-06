@@ -14,4 +14,10 @@ class QuoteRepository (private val httpClient: HttpClient) {
         val json = response.body<JsonObject>().toString()
         return Gson().fromJson(json, Quote::class.java)
     }
+
+    suspend fun getQuoteOfTheDay(): Quote{
+        val response = httpClient.get(QUOTE_OF_THE_DAY)
+        val json = response.body<JsonObject>().toString()
+        return Gson().fromJson(json, Quote::class.java)
+    }
 }

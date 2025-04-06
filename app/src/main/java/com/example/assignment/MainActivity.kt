@@ -13,10 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.assignment.data.Database
-import com.example.assignment.data.EntryRepository
-import com.example.assignment.data.QuoteRepository
-import com.example.assignment.data.client
+import com.example.assignment.data.*
 
 class MainActivity : ComponentActivity() {
     private val db by lazy { Database.getDatabase(applicationContext) }
@@ -33,7 +30,7 @@ class MainActivity : ComponentActivity() {
             }
             val quoteState = QuoteState(quoteRepo)
             LaunchedEffect(quoteState) {
-                quoteState.getQuote()
+                quoteState.getQuotes()
             }
             MainContent(quoteState)
         }
@@ -56,7 +53,7 @@ fun MainContent(quoteState: QuoteState){
                 Home(quoteState)
             }
             composable("add"){
-                Add(navController)
+                Add(navController, quoteState)
             }
         }
     }

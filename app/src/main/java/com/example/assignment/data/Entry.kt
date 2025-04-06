@@ -8,4 +8,6 @@ data class Entry (
     @PrimaryKey(autoGenerate = true) val uid: Int? = null,
     val date: Long,
     val summary: String?,
+    val quoteOfTheDay: String?,
+    val author: String?
 )

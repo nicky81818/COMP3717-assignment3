@@ -4,11 +4,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,26 +47,41 @@ fun Add(navController: NavController){
         ) {
             val addEntryState = remember { AddEntryState() }
 
-            Text("New Entry: ${addEntryState.readableDate}", fontSize = 50.sp)
+            Card(
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 10.dp
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text("New Entry: ${addEntryState.readableDate}",
+                    fontSize = 50.sp,
+                    modifier = Modifier.padding(10.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
-            MyTextField(
-                addEntryState.summary,
-                addEntryState.onSummaryChanged,
-                label = addEntryState.summaryLabel
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Button(onClick = {
-                entriesState.add(
-                    Entry(date = addEntryState.date,
-                        summary = addEntryState.summary)
+                MyTextField(
+                    addEntryState.summary,
+                    addEntryState.onSummaryChanged,
+                    label = addEntryState.summaryLabel
                 )
-                entriesState.refresh()
-                modalDismiss = false
-            }, shape = RectangleShape) {
+
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Button(
+                onClick = {
+                    entriesState.add(
+                        Entry(date = addEntryState.date,
+                            summary = addEntryState.summary)
+                    )
+                    entriesState.refresh()
+                    modalDismiss = false
+                },
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.padding(10.dp)
+                ) {
                 Text("Add Entry")
             }
         }
@@ -80,11 +95,13 @@ fun MyTextField(
     invalid:Boolean = false,
     label: String
 ){
-    Text(label, fontSize = 20.sp)
-    TextField(
-        value = value,
-        onValueChange = onValueChanged,
-        textStyle = TextStyle(fontSize = 30.sp),
-        isError = invalid
-    )
+    Column(modifier = Modifier.padding(20.dp)) {
+        Text(label, fontSize = 20.sp)
+        TextField(
+            value = value,
+            onValueChange = onValueChanged,
+            textStyle = TextStyle(fontSize = 30.sp),
+            isError = invalid
+        )
+    }
 }

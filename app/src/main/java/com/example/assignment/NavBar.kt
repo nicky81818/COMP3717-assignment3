@@ -3,7 +3,6 @@ package com.example.assignment
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -21,7 +20,6 @@ fun NavBar(navController: NavController){
     val navItems = listOf(
         NavItem(Icons.Default.Home, "home"),
         NavItem(Icons.Default.Add, "add"),
-        NavItem(Icons.Default.Person, "profile"),
     )
 
     NavigationBar {

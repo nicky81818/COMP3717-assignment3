@@ -4,15 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -30,18 +27,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val entriesState = remember {EntriesState(entryRepo)}
+
+            val entriesState:EntriesState = viewModel {
+                EntriesState(entryRepo)
+            }
             val quoteState = QuoteState(quoteRepo)
             LaunchedEffect(quoteState) {
                 quoteState.getQuote()
             }
-            MainContent(entriesState, quoteState)
+            MainContent(quoteState)
         }
     }
 }
 
 @Composable
-fun MainContent(entriesState: EntriesState, quoteState: QuoteState){
+fun MainContent(quoteState: QuoteState){
     val navController = rememberNavController()
 
     Scaffold(
@@ -53,13 +53,10 @@ fun MainContent(entriesState: EntriesState, quoteState: QuoteState){
             modifier = Modifier.padding(padding)
         ) {
             composable("home"){
-                Home(entriesState, quoteState)
+                Home(quoteState)
             }
             composable("add"){
-                Add(entriesState, navController)
-            }
-            composable("profile"){
-                Profile()
+                Add(navController)
             }
         }
     }

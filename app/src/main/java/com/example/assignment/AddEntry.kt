@@ -1,5 +1,7 @@
 package com.example.assignment
 
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -10,12 +12,14 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.assignment.data.Entry
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Add(entriesState: EntriesState, navController: NavController){
+fun Add(navController: NavController){
+    val entriesState: EntriesState = viewModel(LocalActivity.current as ComponentActivity)
     Box(modifier = Modifier.safeDrawingPadding()){
         var modalDismiss by remember{ mutableStateOf(true)}
         if (!modalDismiss) {

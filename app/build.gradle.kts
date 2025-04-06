@@ -41,15 +41,10 @@ android {
 }
 
 dependencies {
-
-    // ktor dependencies
     implementation("io.ktor:ktor-client-android:3.0.1")
     implementation("io.ktor:ktor-client-content-negotiation:3.0.1")
     implementation("io.ktor:ktor-serialization-gson:3.0.1")
-//
-//    // coil dependencies (for images)
-//    implementation("io.coil-kt.coil3:coil-compose:3.0.3")
-//    implementation("io.coil-kt.coil3:coil-network-okhttp:3.0.3")
+
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.navigation:navigation-compose:2.8.9")
